@@ -20,7 +20,7 @@ public class Colosseum {
     /**
      * The maximum number of rounds we will let the Pokemon battle.
      */
-    static final int MAX_NUM_ROUNDS = 10;
+    static final int MAX_NUM_ROUNDS = 1002;
 
     /**
      * The first Pokemon we will be fighting.
@@ -102,8 +102,50 @@ public class Colosseum {
      * (Look, we can return objects too!)
      */
     public static Pokemon buildPokemon() {
-        Pokemon returnPokemon = null;
-        return returnPokemon;
+        Pokemon toReturn;
+        System.out.println("Select from the following Pokemon types:\n1 - Normal Pokemon\n2 - Electric Pokemon\n3 - Fire Pokemon\n4 - Water Pokemon");
+        String type = myScan.next();
+        type = type.replaceAll("[^\\d.]", "");
+        while (type.length() == 0) {
+            System.out.println("Halt Evildoer! You shalt not break my code!");
+            System.out.println("Sorry, you must pick either 1, 2, 3, or 4.");
+            System.out.println("Select from the following Pokemon types:\n1 - Normal Pokemon\n2 - Electric Pokemon\n3 - Fire Pokemon\n4 - Water Pokemon");
+            type = myScan.next();
+        }
+        int newType = Integer.parseInt(type);
+        while(newType < 1 || newType > 4) {
+            System.out.println("Sorry, you must pick either 1, 2, 3, or 4.");
+            System.out.println("Select from the following Pokemon types:\n1 - Normal Pokemon\n2 - Electric Pokemon\n3 - Fire Pokemon\n4 - Water Pokemon");
+            newType = myScan.nextInt();
+        }
+        if (newType == 1) {
+            toReturn = new Pokemon();
+        } else if (newType == 2) {
+            toReturn = new ElectricPokemon();
+        } else if (newType == 3) {
+            toReturn = new FirePokemon();
+        } else {
+            toReturn = new WaterPokemon();
+        }
+        System.out.println("Please name your Pokemon:");
+        String toName = myScan.next();
+        toReturn.setName(toName);
+        System.out.println("How many hit points will it have? (1-50):");
+        int hp = Integer.parseInt(myScan.next());
+        while (hp < 1 || hp > 50) {
+            System.out.println("Sorry. Hit points must be between 1 and 50:");
+            hp = Integer.parseInt(myScan.next());
+        }
+        toReturn.setHitPoints(hp);
+        System.out.println("Enter your attack level (1-49):");
+        int attack = Integer.parseInt(myScan.next());
+        while (attack < 1 || attack > 49) {
+            System.out.println("Sorry. The attack level must be between 1 and 49:");
+            attack = Integer.parseInt(myScan.next());
+        }
+        toReturn.setAttackLevel(attack);
+        toReturn.setDefenseLevel(50 - attack);
+        return toReturn;
     }
 
     /**
